@@ -1,4 +1,3 @@
 # decetable
-# decetable
-# decetable
-# decetable
+
+Make yourself accountable and reach your goals!
