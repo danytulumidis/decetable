@@ -2,29 +2,33 @@
 pragma solidity ^0.8.0;
 
 contract Decetable {
-    event GoalCreated(uint256 goalID);
-    event GoalExecuted(uint256 goalID);
+    
+    constructor(address _charity){
+        charity = _charity;
+    }
+
+    // EVENTS
+    event GoalCreated(uint goalID);
+    event GoalExecuted(uint goalID);
 
     struct Goal {
         string name;
         string description;
-        uint256 investment;
-        uint256 deadline;
+        uint investment;
+        uint deadline;
         bool succeeded;
         bool finished;
-        // Investment will go to this when Goal is failed
-        address failedAccount;
+        address creator;
+        address trustedPerson;
     }
 
-    mapping(uint256 => Goal) public goals;
-    mapping(uint256 => address) public goalToUser;
-    // The person that will decide if goal is reached or not
-    mapping(address => uint256) public trustedToGoal;
+    address private immutable charity;
+    uint public totalGoals;
 
-    uint256 public totalGoals;
+    mapping(uint => Goal) public goals;
 
-    modifier onlyTrusted(uint256 _goalID) {
-        require(trustedToGoal[msg.sender] == _goalID, "NOT_TRUSTED");
+    modifier onlyTrusted(uint _goalID) {
+        require(goals[_goalID].trustedPerson == msg.sender, "NOT_TRUSTED");
         _;
     }
 
@@ -33,8 +37,7 @@ contract Decetable {
     function createGoal(
         string calldata _name,
         string calldata _description,
-        uint256 _deadline,
-        address _failedAccount,
+        uint _deadline,
         address _trustedPerson
     ) external payable {
         require(msg.value > 0, "PRICE_MUST_BE_OVER_0");
@@ -43,17 +46,15 @@ contract Decetable {
         goal.description = _description;
         goal.investment = msg.value;
         goal.deadline = block.timestamp + (_deadline * 1 days);
-        goal.failedAccount = _failedAccount;
-
-        goalToUser[totalGoals] = msg.sender;
-        trustedToGoal[_trustedPerson] = totalGoals;
+        goal.creator = msg.sender;
+        goal.trustedPerson = _trustedPerson;
 
         totalGoals++;
 
         emit GoalCreated(totalGoals - 1);
     }
 
-    function setGoalStatus(uint256 _goalID, bool _succeeded)
+    function setGoalStatus(uint _goalID, bool _succeeded)
         external
         onlyTrusted(_goalID)
     {
@@ -62,17 +63,17 @@ contract Decetable {
         _executeGoal(_goalID);
     }
 
-    function _executeGoal(uint256 _goalID) private {
+    function _executeGoal(uint _goalID) private {
         Goal storage goal = goals[_goalID];
         require(goal.finished != true, "ALREADY_EXECUTED");
 
         if (goal.succeeded == false) {
-            (bool succeed, ) = goal.failedAccount.call{value: goal.investment}(
+            (bool succeed, ) = charity.call{value: goal.investment}(
                 ""
             );
             require(succeed, "FAILED_SEND_FAIL");
         } else {
-            (bool succeed, ) = goalToUser[_goalID].call{value: goal.investment}(
+            (bool succeed, ) = goals[_goalID].creator.call{value: goal.investment}(
                 ""
             );
             require(succeed, "FAILED_SEND_USER");
