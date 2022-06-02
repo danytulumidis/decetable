@@ -2,15 +2,11 @@
 pragma solidity ^0.8.0;
 
 contract Decetable {
-    
-    constructor(address _charity){
-        charity = _charity;
-    }
-
     // EVENTS
     event GoalCreated(uint goalID);
     event GoalExecuted(uint goalID);
 
+    // VARIABLES
     struct Goal {
         string name;
         string description;
@@ -18,20 +14,26 @@ contract Decetable {
         uint deadline;
         bool succeeded;
         bool finished;
-        address creator;
+        address payable creator;
         address trustedPerson;
     }
 
-    address private immutable charity;
+    address payable private immutable charity;
     uint public totalGoals;
 
     mapping(uint => Goal) public goals;
 
+    constructor(address payable _charity){
+        charity = _charity;
+    }
+
+    // MODIFIERS
     modifier onlyTrusted(uint _goalID) {
         require(goals[_goalID].trustedPerson == msg.sender, "NOT_TRUSTED");
         _;
     }
 
+    // FUNCTIONS
     /// @notice Creates a Goal for a User
     /// @dev Deadline will be an uint that is measured in days
     function createGoal(
@@ -46,7 +48,7 @@ contract Decetable {
         goal.description = _description;
         goal.investment = msg.value;
         goal.deadline = block.timestamp + (_deadline * 1 days);
-        goal.creator = msg.sender;
+        goal.creator = payable(msg.sender);
         goal.trustedPerson = _trustedPerson;
 
         totalGoals++;
