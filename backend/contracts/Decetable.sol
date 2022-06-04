@@ -20,6 +20,8 @@ contract Decetable {
 
     address payable private immutable charity;
     uint public totalGoals;
+    uint public totalPayback;
+    uint public totalCharity;
 
     mapping(uint => Goal) public goals;
 
@@ -74,11 +76,13 @@ contract Decetable {
                 ""
             );
             require(succeed, "FAILED_SEND_FAIL");
+            totalCharity += goal.investment;
         } else {
             (bool succeed, ) = goals[_goalID].creator.call{value: goal.investment}(
                 ""
             );
             require(succeed, "FAILED_SEND_USER");
+            totalPayback += goal.investment;
         }
 
         goal.finished = true;
