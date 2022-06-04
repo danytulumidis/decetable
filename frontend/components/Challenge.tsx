@@ -4,12 +4,11 @@ const Challenge = (props: {
     challenge: any;
     days: any;
     trustedAccount: any;
-    failedAccount: any;
 }): JSX.Element => {
-    const { challenge, days, trustedAccount, failedAccount } = props;
+    const { challenge, days, trustedAccount } = props;
 
     return (
-        <section id='challenge' className='min-h-screen'>
+        <section id='challenge' className=''>
             <div className='absolute -left-20 top-42 opacity-50'>
                 <Image width={280} height={280} alt='hero' src='/blobby.svg' />
             </div>
@@ -30,6 +29,9 @@ const Challenge = (props: {
                         rows={5}
                         cols={40}
                         value={challenge}
+                        onChange={(e) => {
+                            console.log(e.target.value);
+                        }}
                     ></textarea>
                 </label>
                 <div className='container mx-auto flex px-5 py-24 flex-col md:flex-row gap-10 items-center justify-center'>
@@ -44,6 +46,9 @@ const Challenge = (props: {
                                 className=' rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-secondary-color focus:border-transparent'
                                 placeholder='Your email'
                                 value={days}
+                                onChange={(e) => {
+                                    console.log(e.target.value);
+                                }}
                             />
                         </div>
                     </div>
@@ -58,20 +63,9 @@ const Challenge = (props: {
                                 className=' rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-secondary-color focus:border-transparent'
                                 placeholder='0x...'
                                 value={trustedAccount}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='title-font sm:text-2xl mb-4 font-medium text-white'>
-                            Fail Account
-                        </h2>
-                        <div className='relative'>
-                            <input
-                                type='text'
-                                id='rounded-email'
-                                className=' rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-secondary-color focus:border-transparent'
-                                placeholder='0x...'
-                                value={failedAccount}
+                                onChange={(e) => {
+                                    console.log(e.target.value);
+                                }}
                             />
                         </div>
                     </div>

@@ -8,6 +8,7 @@ import HallOfFame from "../components/HallOfFame";
 import Hero from "../components/Hero";
 import Web3Modal from "web3modal";
 import { Contract, providers, utils } from "ethers";
+import Statistics from "../components/Statistics";
 
 const Home: NextPage = () => {
     const [walletConnected, setWalletConnected] = useState(false);
@@ -50,7 +51,7 @@ const Home: NextPage = () => {
     useEffect(() => {
         if (!walletConnected) {
             web3ModalRef.current = new Web3Modal({
-                network: "rinkeby",
+                network: "mumbai",
                 providerOptions: {},
                 disableInjectedProvider: false,
             }) as any;
@@ -100,8 +101,8 @@ const Home: NextPage = () => {
                     challenge={challenge}
                     days={days}
                     trustedAccount={trustedAccount}
-                    failedAccount={failedAccount}
                 />
+                <Statistics />
                 <HallOfFame />
             </main>
 
