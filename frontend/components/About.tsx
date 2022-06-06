@@ -15,9 +15,11 @@ const About = () => {
                 </div>
                 <div className='lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center'>
                     <h1 className='title-font sm:text-5xl text-3xl mb-4 font-medium text-white'>
-                        How Decetable works?
+                        How{" "}
+                        <span className='text-secondary-color'>Decetable</span>{" "}
+                        works?
                     </h1>
-                    <p className='mb-8 leading-relaxed'>
+                    <p className='mb-8 leading-relaxed text-gray-400'>
                         Decetable will help you to reach your goals. Set a goal
                         with a deadline and put it real money. If you dont reach
                         your goal the money will go Charity. If you reach it you

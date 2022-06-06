@@ -5,9 +5,10 @@ const Statistics = () => {
                 <div className='container px-5 py-24 mx-auto'>
                     <div className='flex flex-col text-center w-full mb-20'>
                         <h1 className='sm:text-5xl text-2xl font-medium title-font mb-4 text-white'>
-                            So many people, so many goals
+                            So many people, so many{" "}
+                            <span className='text-secondary-color'>goals</span>
                         </h1>
-                        <p className='lg:w-2/3 mx-auto leading-relaxed text-base text-white'>
+                        <p className='lg:w-2/3 mx-auto leading-relaxed text-base text-grey-400'>
                             Look at these statistics and see how many people
                             shared their goals here and commited themselves to
                             reach their goals.
@@ -15,7 +16,7 @@ const Statistics = () => {
                     </div>
                     <div className='flex flex-wrap -m-4 text-center'>
                         <div className='p-4 md:w-1/4 sm:w-1/2 w-full'>
-                            <div className='border-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg'>
+                            <div className='border-2 border-secondary-color px-4 py-6 rounded-lg'>
                                 <svg
                                     fill='none'
                                     stroke='currentColor'
@@ -35,7 +36,7 @@ const Statistics = () => {
                             </div>
                         </div>
                         <div className='p-4 md:w-1/4 sm:w-1/2 w-full'>
-                            <div className='border-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg'>
+                            <div className='border-2 border-secondary-color px-4 py-6 rounded-lg'>
                                 <svg
                                     fill='none'
                                     stroke='currentColor'
@@ -56,7 +57,7 @@ const Statistics = () => {
                             </div>
                         </div>
                         <div className='p-4 md:w-1/4 sm:w-1/2 w-full'>
-                            <div className='border-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg'>
+                            <div className='border-2 border-secondary-color px-4 py-6 rounded-lg'>
                                 <svg
                                     fill='none'
                                     stroke='currentColor'
@@ -76,7 +77,7 @@ const Statistics = () => {
                             </div>
                         </div>
                         <div className='p-4 md:w-1/4 sm:w-1/2 w-full'>
-                            <div className='border-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg'>
+                            <div className='border-2 border-secondary-color px-4 py-6 rounded-lg'>
                                 <svg
                                     fill='none'
                                     stroke='currentColor'

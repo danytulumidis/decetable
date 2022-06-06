@@ -3,24 +3,19 @@ import Navbar from "./Navbar";
 
 const Hero = () => {
     return (
-        <section id='hero' className='relative'>
+        <section id='hero' className='mb-28'>
             <Navbar />
-            <div className='absolute -left-20 top-42 opacity-50'>
-                <Image width={180} height={180} alt='hero' src='/blobby.svg' />
-            </div>
-            <div className='absolute opacity-50 right-0 bottom-40'>
-                <Image width={280} height={280} alt='hero' src='/blobby.svg' />
-            </div>
             <div className='text-gray-300 body-font'>
                 <div className='container mx-auto flex px-5 py-24 md:flex-row flex-col items-center'>
                     <div className='lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:pl-20 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center'>
                         <h1 className='title-font sm:text-4xl xl:text-7xl text-3xl mb-4 font-medium text-white xl:leading-tight'>
                             <span className='text-secondary-color'>
-                                Achieve your goals <br /> Make yourself
-                                accountable
-                            </span>{" "}
+                                Achieve your goals
+                            </span>
+                            <br />
+                            Make yourself accountable
                         </h1>
-                        <p className='mb-8 leading-relaxed'>
+                        <p className='mb-8 leading-relaxed text-gray-400 w-10/12'>
                             By making yourself accountable and pay real money
                             you will be able to achieve your goals.
                             Procrastination time is over. Take action.
@@ -34,7 +29,7 @@ const Hero = () => {
                             </button>
                         </div>
                     </div>
-                    <div className='lg:max-w-lg lg:w-full md:w-1/2 w-5/6'>
+                    <div className='lg:max-w-2xl lg:w-full md:w-1/2 w-5/6'>
                         <Image
                             className='object-cover object-center rounded'
                             width={500}

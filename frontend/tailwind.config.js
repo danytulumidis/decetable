@@ -9,7 +9,7 @@ module.exports = {
                 main: "#001530",
                 "secondary-color": "#cd393e",
                 "tertiary-color": "#5e1e4b",
-                "card-color": "#011d41",
+                "card-color": "#142740",
             },
         },
     },

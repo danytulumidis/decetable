@@ -14,7 +14,7 @@ const Navbar = () => {
                     ></Image>
                     <span className='ml-3 text-xl'>Decetable</span>
                 </a>
-                <nav className='md:ml-auto md:mr-auto flex flex-wrap items-center justify-center cursor-pointer text-xl'>
+                <nav className='md:ml-auto md:mr-auto flex flex-wrap items-center justify-center cursor-pointer text-lg'>
                     <a className='mr-5 hover:text-secondary-color'>About</a>
                     <a className='mr-5 hover:text-secondary-color'>
                         Challenge yourself
