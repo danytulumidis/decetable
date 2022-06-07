@@ -10,7 +10,7 @@ const Challenge = (props: {
     return (
         <section
             id='challenge'
-            className='border-2 rounded-3xl border-secondary-color m-10 bg-card-color'
+            className='border-y-2 border-secondary-color bg-card-color'
         >
             <div className='container mx-auto flex px-5 py-24 justify-around items-center'>
                 <div className='flex flex-col text-white'>
@@ -21,10 +21,10 @@ const Challenge = (props: {
                         Enter your goal and make yourself accountable.
                     </p>
                 </div>
-                <div className='flex flex-col items-center'>
+                <div className='flex flex-col items-left'>
                     <label className='text-gray-700' htmlFor='name'>
                         <div>
-                            <h2 className='title-font sm:text-3xl mb-4 font-medium text-white text-center'>
+                            <h2 className='title-font sm:text-2xl mb-4 font-medium text-white'>
                                 Your Goal
                             </h2>
                             <textarea
@@ -42,9 +42,9 @@ const Challenge = (props: {
                             ></textarea>
                         </div>
                     </label>
-                    <div className='container mx-auto flex px-5 py-24 flex-col md:flex-row gap-10 items-center justify-center'>
+                    <div className='container mx-auto flex py-24 flex-col md:flex-row gap-10 items-center justify-center'>
                         <div>
-                            <h2 className='title-font sm:text-3xl mb-4 font-medium text-white'>
+                            <h2 className='title-font sm:text-2xl mb-4 font-medium text-white'>
                                 Time for Completion (in Days)
                             </h2>
                             <div className='relative'>
@@ -61,7 +61,7 @@ const Challenge = (props: {
                             </div>
                         </div>
                         <div>
-                            <h2 className='title-font sm:text-3xl mb-4 font-medium text-white'>
+                            <h2 className='title-font sm:text-2xl mb-4 font-medium text-white'>
                                 Account to be trusted
                             </h2>
                             <div className='relative'>

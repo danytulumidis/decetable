@@ -14,7 +14,8 @@ const Navbar = () => {
                     ></Image>
                     <span className='ml-3 text-xl'>Decetable</span>
                 </a>
-                <nav className='md:ml-auto md:mr-auto flex flex-wrap items-center justify-center cursor-pointer text-lg'>
+                <nav className='md:ml-auto md:mr-auto flex flex-wrap md:gap-6 items-center justify-center cursor-pointer text-lg'>
+                    <a className='mr-5 hover:text-secondary-color'>Home</a>
                     <a className='mr-5 hover:text-secondary-color'>About</a>
                     <a className='mr-5 hover:text-secondary-color'>
                         Challenge yourself
@@ -23,7 +24,7 @@ const Navbar = () => {
                         Hall of fame
                     </a>
                 </nav>
-                <button className='inline-flex text-white items-center bg-gradient-to-l from-tertiary-color to-secondary-color border-0 py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0 transition ease-in-out duration-500 hover:-translate-y-1 hover:scale-110'>
+                <button className='inline-flex text-white items-center bg-gradient-to-l bg-secondary-color border-0 py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0 transition ease-in-out duration-500 hover:-translate-y-1 hover:scale-110'>
                     Connect Wallet
                     <svg
                         fill='none'
