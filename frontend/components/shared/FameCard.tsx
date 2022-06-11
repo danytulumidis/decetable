@@ -36,14 +36,14 @@ const FameCard = () => {
                     <div className='flex items-center mb-14'>
                         <div className='flex flex-col items-left flex-1'>
                             <p className='mb-2'>Trusted Person</p>
-                            <p className='inline-block px-3 py-1 text-xs font-medium tracking-wider  uppercase bg-secondary-color rounded-full'>
+                            <p className='flex justify-center px-3 py-1 text-xs font-medium tracking-wider  uppercase bg-secondary-color rounded-full'>
                                 0x787gsgfxc34sddf
                             </p>
                         </div>
                         <div className='flex-1 flex flex-col items-center'>
                             <p className='mb-2'>Days left</p>
                             <p className='inline-block px-3 py-1 text-xs font-medium tracking-wider  uppercase bg-secondary-color rounded-full'>
-                                2
+                                4
                             </p>
                         </div>
                     </div>

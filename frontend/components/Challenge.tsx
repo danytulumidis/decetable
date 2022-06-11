@@ -1,9 +1,9 @@
 import Image from "next/image";
 
 const Challenge = (props: {
-    challenge: any;
-    days: any;
-    trustedAccount: any;
+    challenge: string;
+    days: number;
+    trustedAccount: string;
 }): JSX.Element => {
     const { challenge, days, trustedAccount } = props;
 
@@ -79,6 +79,9 @@ const Challenge = (props: {
                         </div>
                     </div>
                 </div>
+                <button className='h-full ml-4 inline-flex text-white border-2 border-secondary-color py-2 px-6 focus:outline-none hover:text-secondary-color rounded text-lg z-10 transition ease-in-out duration-500 hover:-translate-y-1 hover:scale-110'>
+                    Create Goal
+                </button>
             </div>
         </section>
     );

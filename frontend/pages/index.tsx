@@ -9,13 +9,13 @@ import Hero from "../components/Hero";
 import Web3Modal from "web3modal";
 import { Contract, providers, utils } from "ethers";
 import Statistics from "../components/Statistics";
+import Navbar from "../components/Navbar";
 
 const Home: NextPage = () => {
     const [walletConnected, setWalletConnected] = useState(false);
     const [challenge, setChallenge] = useState("");
     const [days, setDays] = useState(0);
     const [trustedAccount, setTrustedAccount] = useState("");
-    const [failedAccount, setFailedAccount] = useState("");
 
     const web3ModalRef = useRef();
 
@@ -55,7 +55,6 @@ const Home: NextPage = () => {
                 providerOptions: {},
                 disableInjectedProvider: false,
             }) as any;
-            connectWallet();
         }
     }, [walletConnected]);
 
@@ -95,6 +94,7 @@ const Home: NextPage = () => {
             </Head>
 
             <main className='bg-main'>
+                <Navbar connectWallet={connectWallet} />
                 <Hero />
                 <About />
                 <Challenge
