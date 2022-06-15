@@ -1,7 +1,7 @@
 const FameCard = () => {
     return (
         <div className='px-4 py-12 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-16 text-white'>
-            <div className='flex flex-col max-w-screen-lg overflow-hidden border rounded-lg shadow-xl lg:flex-row sm:mx-auto'>
+            <div className='flex flex-col max-w-screen-lg overflow-hidden border-t-2 border-secondary-color rounded-lg shadow-xl lg:flex-row sm:mx-auto'>
                 <div className='relative lg:w-1/2'>
                     <img
                         src='https://images.unsplash.com/photo-1523908511403-7fc7b25592f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=2700&q=80'

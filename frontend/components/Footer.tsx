@@ -7,7 +7,7 @@ const Footer = () => {
                 <a className='flex title-font font-medium items-center md:justify-start justify-center text-white'>
                     <Image
                         className='object-cover object-center rounded'
-                        width={40}
+                        width={30}
                         height={30}
                         alt='hero'
                         src='/logo.svg'

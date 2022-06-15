@@ -15,7 +15,7 @@ const Navbar = ({ connectWallet }: NavbarProps): JSX.Element => {
                 <a className='flex font-medium items-center text-white mb-4 md:mb-0 pl-20'>
                     <Image
                         className='object-cover object-center rounded'
-                        width={40}
+                        width={30}
                         height={30}
                         alt='hero'
                         src='/logo.svg'

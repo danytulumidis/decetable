@@ -19,7 +19,7 @@ const About = () => {
                         <span className='text-secondary-color'>Decetable</span>{" "}
                         works?
                     </h1>
-                    <p className='mb-8 leading-relaxed text-gray-400'>
+                    <p className='mb-8 mr-48 leading-relaxed text-gray-400'>
                         Decetable will help you to reach your goals. Set a goal
                         with a deadline and put it real money. If you dont reach
                         your goal the money will go Charity. If you reach it you

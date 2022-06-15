@@ -21,7 +21,23 @@ const Hero = () => {
                         </p>
                         <div className='flex justify-center'>
                             <Link href='#challenge'>
-                                <button className='h-full inline-flex text-white bg-secondary-color shadow-md shadow-glow border-0 py-2 px-6 focus:outline-none rounded text-lg z-10 transition ease-in-out duration-500 hover:-translate-y-1 hover:scale-110'>
+                                <button className='h-full inline-flex text-white bg-secondary-color border-2 border-secondary-color py-2 px-6 focus:outline-none rounded text-lg z-10 transition ease-in-out duration-500 hover:-translate-y-1 hover:scale-110'>
+                                    <span className='mr-3'>
+                                        <svg
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            width='27'
+                                            height='27'
+                                            viewBox='0 0 24 24'
+                                            fill='none'
+                                            stroke='#ffffff'
+                                            strokeWidth='2'
+                                            strokeLinecap='round'
+                                            strokeLinejoin='round'
+                                        >
+                                            <circle cx='12' cy='12' r='10' />
+                                            <path d='M12 8l4 4-4 4M8 12h7' />
+                                        </svg>
+                                    </span>
                                     Challenge yourself
                                 </button>
                             </Link>

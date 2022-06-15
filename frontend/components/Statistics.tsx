@@ -14,7 +14,7 @@ const Statistics = () => {
                 </div>
                 <div className='flex flex-wrap -m-4 text-center'>
                     <div className='p-4 md:w-1/4 sm:w-1/2 w-full'>
-                        <div className='border-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg'>
+                        <div className='border-t-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg shadow-xl'>
                             <svg
                                 fill='none'
                                 stroke='currentColor'
@@ -34,7 +34,7 @@ const Statistics = () => {
                         </div>
                     </div>
                     <div className='p-4 md:w-1/4 sm:w-1/2 w-full'>
-                        <div className='border-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg'>
+                        <div className='border-t-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg shadow-xl'>
                             <svg
                                 fill='none'
                                 stroke='currentColor'
@@ -55,7 +55,7 @@ const Statistics = () => {
                         </div>
                     </div>
                     <div className='p-4 md:w-1/4 sm:w-1/2 w-full'>
-                        <div className='border-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg'>
+                        <div className='border-t-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg shadow-xl'>
                             <svg
                                 fill='none'
                                 stroke='currentColor'
@@ -75,7 +75,7 @@ const Statistics = () => {
                         </div>
                     </div>
                     <div className='p-4 md:w-1/4 sm:w-1/2 w-full'>
-                        <div className='border-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg'>
+                        <div className='border-t-2 border-secondary-color bg-card-color px-4 py-6 rounded-lg shadow-xl'>
                             <svg
                                 fill='none'
                                 stroke='currentColor'
