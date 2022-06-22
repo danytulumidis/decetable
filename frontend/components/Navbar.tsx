@@ -12,16 +12,18 @@ const Navbar = ({ connectWallet }: NavbarProps): JSX.Element => {
     return (
         <header className='text-gray-400 bg-main body-font sticky top-0 z-50'>
             <div className='container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center'>
-                <a className='flex font-medium items-center text-white mb-4 md:mb-0 pl-20'>
-                    <Image
-                        className='object-cover object-center rounded'
-                        width={30}
-                        height={30}
-                        alt='hero'
-                        src='/logo.svg'
-                    ></Image>
-                    <span className='ml-3 text-xl'>Decetable</span>
-                </a>
+                <Link href={"/"}>
+                    <a className='flex font-medium items-center text-white mb-4 md:mb-0 pl-20'>
+                        <Image
+                            className='object-cover object-center rounded'
+                            width={30}
+                            height={30}
+                            alt='hero'
+                            src='/logo.svg'
+                        ></Image>
+                        <span className='ml-3 text-xl'>Decetable</span>
+                    </a>
+                </Link>
                 <nav className='md:ml-auto md:mr-auto flex flex-wrap md:gap-6 items-center justify-center cursor-pointer text-lg'>
                     <Link href={"/"}>
                         <a

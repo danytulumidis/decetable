@@ -1,4 +1,8 @@
-const FameCard = () => {
+import Goal from "../../models/Goal";
+
+const FameCard = (props: { goal: Goal }): JSX.Element => {
+    const { goal } = props;
+
     return (
         <div className='px-4 py-12 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-16 text-white'>
             <div className='flex flex-col max-w-screen-lg overflow-hidden border-t-2 border-secondary-color rounded-lg shadow-xl lg:flex-row sm:mx-auto'>

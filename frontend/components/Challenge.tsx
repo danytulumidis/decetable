@@ -12,24 +12,8 @@ const Challenge = (props: {
             id='challenge'
             className='border-y-2 border-secondary-color bg-card-color'
         >
-            <div className='container mx-auto flex flex-row px-5 py-24 justify-around items-center'>
-                <div className='w-1/5 h-1/5 flex flex-col items-center rounded-lg border-t-2 border-secondary-color bg-main text-white shadow-xl'>
-                    <div className='mt-10'>
-                        <Image
-                            className='object-cover object-center rounded'
-                            width={150}
-                            height={150}
-                            alt='money'
-                            src='/money.svg'
-                        />
-                    </div>
-                    <h1 className='text-2xl font-bold pb-2'>DISCLAIMER</h1>
-                    <p className='text-center text-sm text-gray-400 mb-10 mx-6'>
-                        You will pay real money (MATIC). Only invest as much as
-                        you can afford!
-                    </p>
-                </div>
-                <div className='flex flex-col items-center'>
+            <div className='container mx-auto flex flex-row gap-4 px-5 py-24 justify-around items-center'>
+                <div className='flex flex-col items-center w-1/2 mr-4'>
                     <h1 className='title-font sm:text-6xl text-3xl mb-6 font-medium text-white'>
                         Challenge yourself
                     </h1>
@@ -92,25 +76,77 @@ const Challenge = (props: {
                             </div>
                         </div>
                     </div>
-                    <button className='h-full ml-4 inline-flex text-white border-2 border-secondary-color py-2 px-6 focus:outline-none hover:text-secondary-color rounded text-lg z-10 transition ease-in-out duration-500 hover:-translate-y-1 hover:scale-110'>
+                    <button className='h-full inline-flex text-white border-2 border-secondary-color py-2 px-6 focus:outline-none hover:text-secondary-color rounded text-lg z-10 transition ease-in-out duration-500 hover:-translate-y-1 hover:scale-110'>
                         Create Goal
                     </button>
                 </div>
-                <div className='w-1/5 h-1/5 flex flex-col items-center rounded-lg border-t-2 border-secondary-color bg-main text-white shadow-xl'>
-                    <div className='mt-10'>
-                        <Image
-                            className='object-cover object-center rounded'
-                            width={150}
-                            height={150}
-                            alt='goal'
-                            src='/goal.svg'
-                        />
+                <div className='flex flex-col items-end gap-4'>
+                    <div className='w-10/12 flex flex-col items-center rounded-lg border-t-2 border-secondary-color bg-main text-white shadow-xl'>
+                        <div className='mt-10'>
+                            <Image
+                                className='object-cover object-center rounded'
+                                width={150}
+                                height={150}
+                                alt='money'
+                                src='/money.svg'
+                            />
+                        </div>
+                        <h1 className='text-2xl font-bold pb-2'>DISCLAIMER</h1>
+                        <p className='text-center text-sm text-gray-400 mb-10 mx-6'>
+                            You will pay real money (MATIC). Only invest as much
+                            as you can afford!
+                        </p>
                     </div>
-                    <h1 className='text-2xl font-bold pb-2'>ACCOUNTABLE</h1>
-                    <p className='text-center text-sm text-gray-400 mb-10 mx-6'>
-                        You are one click away from making yourself accountable
-                        and reach your goals!
-                    </p>
+                    <div className='w-10/12 flex flex-col items-center rounded-lg border-t-2 border-secondary-color bg-main text-white shadow-xl'>
+                        <div className='mt-10'>
+                            <Image
+                                className='object-cover object-center rounded'
+                                width={150}
+                                height={150}
+                                alt='ethereum'
+                                src='/ethereum.svg'
+                            />
+                        </div>
+                        <h1 className='text-2xl font-bold pb-2'>BLOCKCHAIN</h1>
+                        <p className='text-center text-sm text-gray-400 mb-10 mx-6'>
+                            Your goal will be stored on the blockchain and will
+                            be there forever!
+                        </p>
+                    </div>
+                </div>
+                <div className='flex flex-col gap-4 items-start'>
+                    <div className='w-10/12 flex flex-col items-center rounded-lg border-t-2 border-secondary-color bg-main text-white shadow-xl'>
+                        <div className='mt-10'>
+                            <Image
+                                className='object-cover object-center rounded'
+                                width={150}
+                                height={150}
+                                alt='goal'
+                                src='/goal.svg'
+                            />
+                        </div>
+                        <h1 className='text-2xl font-bold pb-2'>ACCOUNTABLE</h1>
+                        <p className='text-center text-sm text-gray-400 mb-10 mx-6'>
+                            Make yourself accountable and reach your goals and
+                            dreams!
+                        </p>
+                    </div>
+                    <div className='w-10/12 flex flex-col items-center rounded-lg border-t-2 border-secondary-color bg-main text-white shadow-xl'>
+                        <div className='mt-10'>
+                            <Image
+                                className='object-cover object-center rounded'
+                                width={150}
+                                height={150}
+                                alt='success'
+                                src='/success.svg'
+                            />
+                        </div>
+                        <h1 className='text-2xl font-bold pb-2'>SUCCESS</h1>
+                        <p className='text-center text-sm text-gray-400 mb-10 mx-6'>
+                            Show your goals to the world, be accountable for it
+                            and you will eventually succeed!
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>

@@ -10,12 +10,19 @@ import Web3Modal from "web3modal";
 import { Contract, providers, utils } from "ethers";
 import Statistics from "../components/Statistics";
 import Navbar from "../components/Navbar";
+import { ABI, DECETABLE_CONTRACT } from "../constants";
+import Goal from "../models/Goal";
 
 const Home: NextPage = () => {
     const [walletConnected, setWalletConnected] = useState(false);
+    const [goals, setGoals] = useState<Goal[]>([]);
     const [challenge, setChallenge] = useState("");
     const [days, setDays] = useState(0);
     const [trustedAccount, setTrustedAccount] = useState("");
+    const [totalGoals, setTotalGoals] = useState(0);
+    const [totalGoalsSucceeded, setTotalGoalsSucceeded] = useState(0);
+    const [totalPayback, setTotalPayback] = useState(0);
+    const [totalDonated, setTotalDonated] = useState(0);
 
     const web3ModalRef = useRef();
 
@@ -27,7 +34,8 @@ const Home: NextPage = () => {
 
         // If user is not connected to the Rinkeby network, let them know and throw an error
         const { chainId } = await web3Provider.getNetwork();
-        if (chainId !== 80001) {
+        // Localhost = 31337, Mumbai = 80001
+        if (chainId !== 31337) {
             window.alert("Change the network to Mumbai");
             throw new Error("Change network to Mumbai");
         }
@@ -51,12 +59,101 @@ const Home: NextPage = () => {
     useEffect(() => {
         if (!walletConnected) {
             web3ModalRef.current = new Web3Modal({
-                network: "mumbai",
+                network: "localhost",
                 providerOptions: {},
                 disableInjectedProvider: false,
             }) as any;
         }
+
+        // Fetch data from the blockchain
+        getTotalGoals();
+        getTotalGoalsSucceeded();
+        getTotalPayback();
+        getTotalCharity();
     }, [walletConnected]);
+
+    /*
+    #############################
+    GETTER FUNCTIONS
+    #############################
+    */
+    const getTotalGoals = async () => {
+        try {
+            const provider = await getProviderOrSigner();
+
+            const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
+
+            let totalGoals: number = await contract.totalGoals();
+            totalGoals = +totalGoals.toString();
+
+            setTotalGoals(totalGoals);
+        } catch (error) {}
+    };
+
+    const getTotalGoalsSucceeded = async () => {
+        try {
+            const provider = await getProviderOrSigner();
+
+            const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
+
+            let totalGoalsSucceeded: number =
+                await contract.totalGoalsSucceeded();
+            totalGoalsSucceeded = +totalGoalsSucceeded.toString();
+
+            setTotalGoalsSucceeded(totalGoals);
+        } catch (error) {}
+    };
+
+    const getTotalPayback = async () => {
+        try {
+            const provider = await getProviderOrSigner();
+
+            const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
+
+            let totalPayback: number = await contract.totalPayback();
+            totalPayback = +totalPayback.toString();
+
+            setTotalPayback(totalGoals);
+        } catch (error) {}
+    };
+
+    const getTotalCharity = async () => {
+        try {
+            const provider = await getProviderOrSigner();
+
+            const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
+
+            let totalCharity: number = await contract.totalCharity();
+            totalCharity = +totalCharity.toString();
+
+            setTotalDonated(totalGoals);
+        } catch (error) {}
+    };
+
+    /*
+    #############################
+    TRANSACTION FUNCTIONS
+    #############################
+    */
+    const createGoal = async (goal: Goal) => {
+        try {
+            const provider = await getProviderOrSigner(true);
+
+            const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
+
+            const tx = await contract.createGoal(goal);
+            await tx.wait();
+            setGoals([...goals, goal]);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const submitGoal = async (goal: Goal) => {
+        // TODO: Submit goal with success or failed
+        // TODO: Update Statistics
+        // TODO: Update Goal Status
+    };
 
     return (
         <div>
@@ -102,8 +199,13 @@ const Home: NextPage = () => {
                     days={days}
                     trustedAccount={trustedAccount}
                 />
-                <Statistics />
-                <HallOfFame />
+                <Statistics
+                    totalGoals={totalGoals}
+                    totalGoalsSucceeded={totalGoalsSucceeded}
+                    totalPayback={totalPayback}
+                    totalDonated={totalDonated}
+                />
+                <HallOfFame goals={goals} />
             </main>
 
             <Footer />
