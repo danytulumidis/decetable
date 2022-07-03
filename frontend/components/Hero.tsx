@@ -7,7 +7,7 @@ const Hero = () => {
             <div className='text-gray-300 body-font'>
                 <div className='container mx-auto flex px-5 py-24 md:flex-row flex-col items-center'>
                     <div className='lg:flex-grow md:w-1/2 md:pl-20 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center'>
-                        <h1 className='title-font sm:text-4xl xl:text-7xl text-3xl mb-4 font-medium text-white xl:leading-tight'>
+                        <h1 className='title-font sm:text-4xl xl:text-6xl 2xl:text-7xl text-3xl mb-4 font-medium text-white xl:leading-tight'>
                             <span className='text-secondary-color'>
                                 Achieve your goals
                             </span>

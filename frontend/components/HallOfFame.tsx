@@ -1,8 +1,11 @@
 import Goal from "../models/Goal";
 import FameCard from "./shared/FameCard";
 
-const HallOfFame = (props: { goals: Goal[] }): JSX.Element => {
-    const { goals } = props;
+const HallOfFame = (props: {
+    goals: Goal[];
+    submitGoal: (goal: Goal) => Promise<void>;
+}): JSX.Element => {
+    const { goals, submitGoal } = props;
 
     return (
         <section id='halloffame'>
@@ -10,11 +13,17 @@ const HallOfFame = (props: { goals: Goal[] }): JSX.Element => {
                 <h1 className='text-white lg:text-5xl'>
                     People and their goals
                 </h1>
-                {goals.map((goal: Goal) => {
-                    return <FameCard key={goal.id} goal={goal} />;
-                })}
-                <FameCard goal={goals[0]} />
-                <FameCard goal={goals[0]} />
+                {goals.length
+                    ? goals.map((goal: Goal) => {
+                          return (
+                              <FameCard
+                                  key={goal.id}
+                                  goal={goal}
+                                  submitGoal={submitGoal}
+                              />
+                          );
+                      })
+                    : null}
             </div>
         </section>
     );

@@ -39,6 +39,60 @@ export const ABI = [
     {
         inputs: [
             {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        name: "allGoals",
+        outputs: [
+            {
+                internalType: "string",
+                name: "name",
+                type: "string",
+            },
+            {
+                internalType: "string",
+                name: "description",
+                type: "string",
+            },
+            {
+                internalType: "uint256",
+                name: "investment",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "deadline",
+                type: "uint256",
+            },
+            {
+                internalType: "bool",
+                name: "succeeded",
+                type: "bool",
+            },
+            {
+                internalType: "bool",
+                name: "finished",
+                type: "bool",
+            },
+            {
+                internalType: "address payable",
+                name: "creator",
+                type: "address",
+            },
+            {
+                internalType: "address",
+                name: "trustedPerson",
+                type: "address",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
                 internalType: "string",
                 name: "_name",
                 type: "string",
@@ -62,6 +116,54 @@ export const ABI = [
         name: "createGoal",
         outputs: [],
         stateMutability: "payable",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "getGoals",
+        outputs: [
+            {
+                internalType: "string[]",
+                name: "",
+                type: "string[]",
+            },
+            {
+                internalType: "string[]",
+                name: "",
+                type: "string[]",
+            },
+            {
+                internalType: "uint256[]",
+                name: "",
+                type: "uint256[]",
+            },
+            {
+                internalType: "uint256[]",
+                name: "",
+                type: "uint256[]",
+            },
+            {
+                internalType: "bool[]",
+                name: "",
+                type: "bool[]",
+            },
+            {
+                internalType: "bool[]",
+                name: "",
+                type: "bool[]",
+            },
+            {
+                internalType: "address[]",
+                name: "",
+                type: "address[]",
+            },
+            {
+                internalType: "address[]",
+                name: "",
+                type: "address[]",
+            },
+        ],
+        stateMutability: "view",
         type: "function",
     },
     {
@@ -125,11 +227,6 @@ export const ABI = [
                 name: "_goalID",
                 type: "uint256",
             },
-            {
-                internalType: "bool",
-                name: "_succeeded",
-                type: "bool",
-            },
         ],
         name: "setGoalStatus",
         outputs: [],
@@ -164,6 +261,19 @@ export const ABI = [
     },
     {
         inputs: [],
+        name: "totalGoalsSucceeded",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
         name: "totalPayback",
         outputs: [
             {
@@ -176,4 +286,4 @@ export const ABI = [
         type: "function",
     },
 ];
-export const DECETABLE_CONTRACT = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+export const DECETABLE_CONTRACT = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";

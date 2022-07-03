@@ -7,18 +7,20 @@ import Footer from "../components/Footer";
 import HallOfFame from "../components/HallOfFame";
 import Hero from "../components/Hero";
 import Web3Modal from "web3modal";
-import { Contract, providers, utils } from "ethers";
+import { Contract, ethers, providers, Signer, utils } from "ethers";
 import Statistics from "../components/Statistics";
 import Navbar from "../components/Navbar";
 import { ABI, DECETABLE_CONTRACT } from "../constants";
 import Goal from "../models/Goal";
+import { formatGoalsArray } from "../utils";
+
+// TODO: Upload Images and save them via Arweave
+// TODO: Implement Toast Notifications for errors
 
 const Home: NextPage = () => {
     const [walletConnected, setWalletConnected] = useState(false);
+    const [account, setAccount] = useState("");
     const [goals, setGoals] = useState<Goal[]>([]);
-    const [challenge, setChallenge] = useState("");
-    const [days, setDays] = useState(0);
-    const [trustedAccount, setTrustedAccount] = useState("");
     const [totalGoals, setTotalGoals] = useState(0);
     const [totalGoalsSucceeded, setTotalGoalsSucceeded] = useState(0);
     const [totalPayback, setTotalPayback] = useState(0);
@@ -44,6 +46,11 @@ const Home: NextPage = () => {
             const signer = web3Provider.getSigner();
             return signer;
         }
+
+        if (account === "") {
+            setAccount(await web3Provider.getSigner().getAddress());
+        }
+
         return web3Provider;
     };
 
@@ -64,9 +71,8 @@ const Home: NextPage = () => {
                 disableInjectedProvider: false,
             }) as any;
         }
-
         // Fetch data from the blockchain
-        getTotalGoals();
+        getGoals();
         getTotalGoalsSucceeded();
         getTotalPayback();
         getTotalCharity();
@@ -77,20 +83,41 @@ const Home: NextPage = () => {
     GETTER FUNCTIONS
     #############################
     */
-    const getTotalGoals = async () => {
+    const getGoals = async (): Promise<void> => {
         try {
             const provider = await getProviderOrSigner();
 
             const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
 
             let totalGoals: number = await contract.totalGoals();
-            totalGoals = +totalGoals.toString();
+            totalGoals = +totalGoals;
+
+            setTotalGoals(totalGoals);
+
+            const fragments: any = await contract.getGoals();
+            const allGoals: Goal[] = formatGoalsArray(fragments, totalGoals);
+            console.log(allGoals);
+
+            // TODO: Update Finish and Succeeded Property that may is changed on formatGoalsArray function
+
+            setGoals(allGoals);
+        } catch (error) {}
+    };
+
+    const getTotalGoals = async (): Promise<void> => {
+        try {
+            const provider = await getProviderOrSigner();
+
+            const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
+
+            let totalGoals: number = await contract.totalGoals();
+            totalGoals = +totalGoals;
 
             setTotalGoals(totalGoals);
         } catch (error) {}
     };
 
-    const getTotalGoalsSucceeded = async () => {
+    const getTotalGoalsSucceeded = async (): Promise<void> => {
         try {
             const provider = await getProviderOrSigner();
 
@@ -98,35 +125,35 @@ const Home: NextPage = () => {
 
             let totalGoalsSucceeded: number =
                 await contract.totalGoalsSucceeded();
-            totalGoalsSucceeded = +totalGoalsSucceeded.toString();
+            totalGoalsSucceeded = +totalGoalsSucceeded;
 
-            setTotalGoalsSucceeded(totalGoals);
+            setTotalGoalsSucceeded(totalGoalsSucceeded);
         } catch (error) {}
     };
 
-    const getTotalPayback = async () => {
+    const getTotalPayback = async (): Promise<void> => {
         try {
             const provider = await getProviderOrSigner();
 
             const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
 
             let totalPayback: number = await contract.totalPayback();
-            totalPayback = +totalPayback.toString();
+            totalPayback = +ethers.utils.formatEther(totalPayback.toString());
 
-            setTotalPayback(totalGoals);
+            setTotalPayback(totalPayback);
         } catch (error) {}
     };
 
-    const getTotalCharity = async () => {
+    const getTotalCharity = async (): Promise<void> => {
         try {
             const provider = await getProviderOrSigner();
 
             const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
 
             let totalCharity: number = await contract.totalCharity();
-            totalCharity = +totalCharity.toString();
+            totalCharity = +totalCharity;
 
-            setTotalDonated(totalGoals);
+            setTotalDonated(totalCharity);
         } catch (error) {}
     };
 
@@ -135,24 +162,56 @@ const Home: NextPage = () => {
     TRANSACTION FUNCTIONS
     #############################
     */
-    const createGoal = async (goal: Goal) => {
+    const createGoal = async (goal: Goal): Promise<void> => {
         try {
+            // if (goal.trustedPerson === account)
+            //     throw new Error(
+            //         "You can't be the trusted person for your own goal!"
+            //     );
+
             const provider = await getProviderOrSigner(true);
 
             const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
 
-            const tx = await contract.createGoal(goal);
+            const finishDate: number =
+                Date.now() + goal.deadline * 24 * 60 * 60 * 1000;
+
+            const tx = await contract.createGoal(
+                goal.name,
+                goal.description,
+                finishDate,
+                goal.trustedPerson,
+                { value: ethers.utils.parseEther(String(goal.investment)) }
+            );
             await tx.wait();
+
             setGoals([...goals, goal]);
+            await getGoals();
+            await getTotalGoals();
         } catch (error) {
             console.log(error);
         }
     };
 
-    const submitGoal = async (goal: Goal) => {
-        // TODO: Submit goal with success or failed
-        // TODO: Update Statistics
-        // TODO: Update Goal Status
+    const submitGoal = async (goal: Goal): Promise<void> => {
+        if (goal.deadline < Date.now()) throw new Error("Deadline is over!");
+
+        try {
+            const provider = await getProviderOrSigner(true);
+
+            const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
+
+            const tx = await contract.setGoalStatus(goal.id);
+            await tx.wait();
+
+            goal.succeeded = true;
+            goal.finished = true;
+
+            setGoals([...goals, goal]);
+            getTotalGoalsSucceeded();
+            getTotalPayback();
+            getTotalCharity();
+        } catch (error) {}
     };
 
     return (
@@ -195,9 +254,9 @@ const Home: NextPage = () => {
                 <Hero />
                 <About />
                 <Challenge
-                    challenge={challenge}
-                    days={days}
-                    trustedAccount={trustedAccount}
+                    totalGoals={totalGoals}
+                    account={account}
+                    createGoal={createGoal}
                 />
                 <Statistics
                     totalGoals={totalGoals}
@@ -205,7 +264,7 @@ const Home: NextPage = () => {
                     totalPayback={totalPayback}
                     totalDonated={totalDonated}
                 />
-                <HallOfFame goals={goals} />
+                <HallOfFame goals={goals} submitGoal={submitGoal} />
             </main>
 
             <Footer />

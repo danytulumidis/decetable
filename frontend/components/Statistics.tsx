@@ -1,3 +1,5 @@
+// TODO: Change SVG in Statistics Cards
+
 const Statistics = (props: {
     totalGoals: number;
     totalGoalsSucceeded: number;
