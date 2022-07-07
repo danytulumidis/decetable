@@ -5,7 +5,7 @@ import Goal from "../models/Goal";
 const Challenge = (props: {
     totalGoals: number;
     account: string;
-    createGoal: (goal: Goal) => Promise<void>;
+    createGoal: (goal: Goal, days: number) => Promise<void>;
 }): JSX.Element => {
     const { totalGoals, account, createGoal } = props;
 
@@ -29,7 +29,7 @@ const Challenge = (props: {
             trustedAccount
         );
 
-        createGoal(newGoal);
+        createGoal(newGoal, days);
     };
 
     return (
@@ -157,14 +157,14 @@ const Challenge = (props: {
                                 className='object-cover object-center rounded'
                                 width={150}
                                 height={150}
-                                alt='ethereum'
-                                src='/ethereum.svg'
+                                alt='charity'
+                                src='/charity.svg'
                             />
                         </div>
-                        <h1 className='text-2xl font-bold pb-2'>BLOCKCHAIN</h1>
+                        <h1 className='text-2xl font-bold pb-2'>CHARITY</h1>
                         <p className='text-center text-sm text-gray-400 mb-10 mx-6'>
-                            Your goal will be stored on the blockchain and will
-                            be there forever!
+                            Unreached goals and their investment will be donated
+                            to the Charity Save the Children.
                         </p>
                     </div>
                 </div>

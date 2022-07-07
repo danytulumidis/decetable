@@ -69,7 +69,7 @@ const Navbar = ({ connectWallet }: NavbarProps): JSX.Element => {
                                     : "mr-5 hover:text-secondary-color"
                             }
                         >
-                            Hall of fame
+                            Hall of Fame
                         </a>
                     </Link>
                 </nav>

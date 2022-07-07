@@ -13,9 +13,7 @@ import Navbar from "../components/Navbar";
 import { ABI, DECETABLE_CONTRACT } from "../constants";
 import Goal from "../models/Goal";
 import { formatGoalsArray } from "../utils";
-
-// TODO: Upload Images and save them via Arweave
-// TODO: Implement Toast Notifications for errors
+import ToastState from "../models/Toast";
 
 const Home: NextPage = () => {
     const [walletConnected, setWalletConnected] = useState(false);
@@ -25,22 +23,24 @@ const Home: NextPage = () => {
     const [totalGoalsSucceeded, setTotalGoalsSucceeded] = useState(0);
     const [totalPayback, setTotalPayback] = useState(0);
     const [totalDonated, setTotalDonated] = useState(0);
+    const [toastState, setToastState] = useState<ToastState>();
+    const [toastMessage, setToastMessage] = useState("");
 
     const web3ModalRef = useRef();
 
+    /*
+    #############################
+    BLOCKCHAIN CONNECTION
+    #############################
+    */
     const getProviderOrSigner = async (needSigner = false) => {
         // Connect to Metamask
         // @ts-ignore: Object is possibly 'null'
         const provider = await web3ModalRef.current.connect();
         const web3Provider = new providers.Web3Provider(provider);
 
-        // If user is not connected to the Rinkeby network, let them know and throw an error
         const { chainId } = await web3Provider.getNetwork();
         // Localhost = 31337, Mumbai = 80001
-        if (chainId !== 31337) {
-            window.alert("Change the network to Mumbai");
-            throw new Error("Change network to Mumbai");
-        }
 
         if (needSigner) {
             const signer = web3Provider.getSigner();
@@ -58,8 +58,8 @@ const Home: NextPage = () => {
         try {
             await getProviderOrSigner();
             setWalletConnected(true);
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            handleToastState(3, error);
         }
     };
 
@@ -90,6 +90,7 @@ const Home: NextPage = () => {
             const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
 
             let totalGoals: number = await contract.totalGoals();
+
             totalGoals = +totalGoals;
 
             setTotalGoals(totalGoals);
@@ -98,10 +99,10 @@ const Home: NextPage = () => {
             const allGoals: Goal[] = formatGoalsArray(fragments, totalGoals);
             console.log(allGoals);
 
-            // TODO: Update Finish and Succeeded Property that may is changed on formatGoalsArray function
-
             setGoals(allGoals);
-        } catch (error) {}
+        } catch (error: any) {
+            handleToastState(3, error);
+        }
     };
 
     const getTotalGoals = async (): Promise<void> => {
@@ -114,7 +115,9 @@ const Home: NextPage = () => {
             totalGoals = +totalGoals;
 
             setTotalGoals(totalGoals);
-        } catch (error) {}
+        } catch (error: any) {
+            handleToastState(3, error);
+        }
     };
 
     const getTotalGoalsSucceeded = async (): Promise<void> => {
@@ -128,7 +131,9 @@ const Home: NextPage = () => {
             totalGoalsSucceeded = +totalGoalsSucceeded;
 
             setTotalGoalsSucceeded(totalGoalsSucceeded);
-        } catch (error) {}
+        } catch (error: any) {
+            handleToastState(3, error);
+        }
     };
 
     const getTotalPayback = async (): Promise<void> => {
@@ -141,7 +146,9 @@ const Home: NextPage = () => {
             totalPayback = +ethers.utils.formatEther(totalPayback.toString());
 
             setTotalPayback(totalPayback);
-        } catch (error) {}
+        } catch (error: any) {
+            handleToastState(3, error);
+        }
     };
 
     const getTotalCharity = async (): Promise<void> => {
@@ -154,7 +161,9 @@ const Home: NextPage = () => {
             totalCharity = +totalCharity;
 
             setTotalDonated(totalCharity);
-        } catch (error) {}
+        } catch (error: any) {
+            handleToastState(3, error);
+        }
     };
 
     /*
@@ -162,8 +171,9 @@ const Home: NextPage = () => {
     TRANSACTION FUNCTIONS
     #############################
     */
-    const createGoal = async (goal: Goal): Promise<void> => {
+    const createGoal = async (goal: Goal, days: number): Promise<void> => {
         try {
+            // TODO: Activate before launch
             // if (goal.trustedPerson === account)
             //     throw new Error(
             //         "You can't be the trusted person for your own goal!"
@@ -173,13 +183,10 @@ const Home: NextPage = () => {
 
             const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
 
-            const finishDate: number =
-                Date.now() + goal.deadline * 24 * 60 * 60 * 1000;
-
             const tx = await contract.createGoal(
                 goal.name,
                 goal.description,
-                finishDate,
+                Math.floor((Date.now() + days * 86400000) / 1000),
                 goal.trustedPerson,
                 { value: ethers.utils.parseEther(String(goal.investment)) }
             );
@@ -188,13 +195,17 @@ const Home: NextPage = () => {
             setGoals([...goals, goal]);
             await getGoals();
             await getTotalGoals();
-        } catch (error) {
-            console.log(error);
+
+            handleToastState(0, "Your Goal was successfully created!");
+        } catch (error: any) {
+            handleToastState(3, error);
         }
     };
 
     const submitGoal = async (goal: Goal): Promise<void> => {
-        if (goal.deadline < Date.now()) throw new Error("Deadline is over!");
+        const deadlineIsOver: boolean = goal.deadline < Date.now();
+        if (goal.trustedPerson !== account)
+            throw new Error("You are not the trusted person!");
 
         try {
             const provider = await getProviderOrSigner(true);
@@ -204,14 +215,31 @@ const Home: NextPage = () => {
             const tx = await contract.setGoalStatus(goal.id);
             await tx.wait();
 
-            goal.succeeded = true;
+            deadlineIsOver ? (goal.succeeded = false) : (goal.succeeded = true);
             goal.finished = true;
 
-            setGoals([...goals, goal]);
+            // setGoals([...goals, goal]);
             getTotalGoalsSucceeded();
             getTotalPayback();
             getTotalCharity();
-        } catch (error) {}
+            handleToastState(0, "The Goal was successfully submitted!");
+        } catch (error: any) {
+            handleToastState(3, error);
+        }
+    };
+
+    /*
+    #############################
+    UTILITY FUNCTIONS
+    #############################
+    */
+    const handleToastState = (state: ToastState, message: string): void => {
+        setToastState(state);
+        setToastMessage(message);
+
+        setTimeout(() => {
+            setToastMessage("");
+        }, 4000);
     };
 
     return (
@@ -251,7 +279,7 @@ const Home: NextPage = () => {
 
             <main className='bg-main'>
                 <Navbar connectWallet={connectWallet} />
-                <Hero />
+                <Hero toastState={toastState} toastMessage={toastMessage} />
                 <About />
                 <Challenge
                     totalGoals={totalGoals}

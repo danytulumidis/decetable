@@ -8,25 +8,16 @@ export const formatGoalsArray = (
     let allGoals: Goal[] = [];
 
     for (let i = 0; i < totalGoals; i++) {
-        let succeeded: boolean = false;
-        let finished: boolean = false;
-
-        if (!fragments[5][i] && checkGoalDeadline(+fragments[3][i])) {
-            succeeded = false;
-            finished = true;
-        } else {
-            succeeded = fragments[4][i];
-            finished = fragments[5][i];
-        }
+        const deadline = fragments[3][i] * 1000;
 
         const goal: Goal = {
             id: i,
             name: fragments[0][i],
             description: fragments[1][i],
             investment: +ethers.utils.formatEther(fragments[2][i]),
-            deadline: +fragments[3][i],
-            succeeded: succeeded,
-            finished: finished,
+            deadline: deadline,
+            succeeded: fragments[4][i],
+            finished: fragments[5][i],
             creator: fragments[6][i],
             trustedPerson: fragments[7][i],
         };

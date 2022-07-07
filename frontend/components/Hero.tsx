@@ -1,9 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import ToastState from "../models/Toast";
+import Toast from "./shared/Toast";
 
-const Hero = () => {
+const Hero = (props: {
+    toastState: ToastState | any;
+    toastMessage: string;
+}) => {
+    const { toastState, toastMessage } = props;
+
     return (
         <section id='hero' className='mb-28'>
+            {/* <Toast message={toastMessage} state={toastState} /> */}
             <div className='text-gray-300 body-font'>
                 <div className='container mx-auto flex px-5 py-24 md:flex-row flex-col items-center'>
                     <div className='lg:flex-grow md:w-1/2 md:pl-20 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center'>
@@ -57,6 +65,19 @@ const Hero = () => {
                             src='/hero_image.png'
                         />
                     </div>
+                </div>
+                <div className='animate-bounce bg-white dark:bg-card-color p-2 w-10 h-10 ring-1 dark:ring-secondary-color shadow-lg rounded-full flex items-center justify-center mx-auto'>
+                    <svg
+                        className='w-6 h-6 text-secondary-color'
+                        fill='none'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        viewBox='0 0 24 24'
+                        stroke='currentColor'
+                    >
+                        <path d='M19 14l-7 7m0 0l-7-7m7 7V3'></path>
+                    </svg>
                 </div>
             </div>
         </section>
