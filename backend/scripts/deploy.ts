@@ -5,9 +5,12 @@ async function main() {
   // get the contract
   const contract = await ethers.getContractFactory("Decetable");
 
+  // Current Charity (Save the children)
+  // 0xCf9Fd660B448AD694B2355a224F12256E7c113Ec
+
   // deploy the contract
   const deployedContract = await contract.deploy(
-    "0xeeB813238C79147E0535C34207C7F916777ea34d"
+    "0xCf9Fd660B448AD694B2355a224F12256E7c113Ec"
   );
 
   // print the address of the deployed contract

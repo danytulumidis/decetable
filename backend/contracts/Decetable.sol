@@ -67,7 +67,11 @@ contract Decetable {
         external
         onlyTrusted(_goalID)
     {
-        goals[_goalID].succeeded = true;
+        if ((goals[_goalID].deadline) < block.timestamp) {
+            goals[_goalID].succeeded = false;    
+        } else {
+            goals[_goalID].succeeded = true;
+        }
 
         _executeGoal(_goalID);
     }
@@ -95,26 +99,26 @@ contract Decetable {
         emit GoalExecuted(_goalID);
     }
 
-    function getGoals() public view returns (string[] memory, string[] memory, uint[] memory, uint[] memory, bool[] memory, bool[] memory, address[] memory,address[] memory){
-      string[] memory name = new string[](totalGoals);
-      string[] memory description = new string[](totalGoals);
-      uint[] memory investment = new uint[](totalGoals);
-      uint[] memory deadline = new uint[](totalGoals);
-      bool[] memory succeeded = new bool[](totalGoals);
-      bool[] memory finished = new bool[](totalGoals);
-      address[] memory creator = new address[](totalGoals);
-      address[] memory trustedPerson = new address[](totalGoals);
-      for (uint i = 0; i < totalGoals; i++) {
-          Goal storage goal = goals[i];
-          name[i] = goal.name;
-          description[i] = goal.description;
-          investment[i] = goal.investment;
-          deadline[i] = goal.deadline;
-          succeeded[i] = goal.succeeded;
-          finished[i] = goal.finished;
-          creator[i] = goal.creator;
-          trustedPerson[i] = goal.trustedPerson;
-      }
+    function getGoals() external view returns (string[] memory, string[] memory, uint[] memory, uint[] memory, bool[] memory, bool[] memory, address[] memory,address[] memory) {
+        string[] memory name = new string[](totalGoals);
+        string[] memory description = new string[](totalGoals);
+        uint[] memory investment = new uint[](totalGoals);
+        uint[] memory deadline = new uint[](totalGoals);
+        bool[] memory succeeded = new bool[](totalGoals);
+        bool[] memory finished = new bool[](totalGoals);
+        address[] memory creator = new address[](totalGoals);
+        address[] memory trustedPerson = new address[](totalGoals);
+        for (uint i = 0; i < totalGoals; i++) {
+            Goal storage goal = goals[i];
+            name[i] = goal.name;
+            description[i] = goal.description;
+            investment[i] = goal.investment;
+            deadline[i] = goal.deadline;
+            succeeded[i] = goal.succeeded;
+            finished[i] = goal.finished;
+            creator[i] = goal.creator;
+            trustedPerson[i] = goal.trustedPerson;
+        }
 
       return (name,description,investment,deadline,succeeded,finished,creator,trustedPerson);
   }
