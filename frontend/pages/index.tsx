@@ -54,7 +54,7 @@ const Home: NextPage = () => {
         return web3Provider;
     };
 
-    const connectWallet = async () => {
+    const connectWallet = async (): Promise<void> => {
         try {
             await getProviderOrSigner();
             setWalletConnected(true);
@@ -158,7 +158,7 @@ const Home: NextPage = () => {
             const contract = new Contract(DECETABLE_CONTRACT, ABI, provider);
 
             let totalCharity: number = await contract.totalCharity();
-            totalCharity = +totalCharity;
+            totalCharity = +ethers.utils.formatEther(totalCharity.toString());
 
             setTotalDonated(totalCharity);
         } catch (error: any) {
@@ -192,7 +192,6 @@ const Home: NextPage = () => {
             );
             await tx.wait();
 
-            setGoals([...goals, goal]);
             await getGoals();
             await getTotalGoals();
 
@@ -218,10 +217,10 @@ const Home: NextPage = () => {
             deadlineIsOver ? (goal.succeeded = false) : (goal.succeeded = true);
             goal.finished = true;
 
-            // setGoals([...goals, goal]);
-            getTotalGoalsSucceeded();
-            getTotalPayback();
-            getTotalCharity();
+            await getGoals();
+            await getTotalGoalsSucceeded();
+            await getTotalPayback();
+            await getTotalCharity();
             handleToastState(0, "The Goal was successfully submitted!");
         } catch (error: any) {
             handleToastState(3, error);
